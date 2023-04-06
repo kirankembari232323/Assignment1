@@ -8,17 +8,44 @@ import UsersDetails from './components/UsersDetails';
 import { UserDataContext }  from './context/UserDataContext';
 
 function App() {
+  const api = `https://reqres.in/api/users`
   const[users, setUsers] = useState([]);
-
+  const[isUserAdded, setIsUserAdded] = useState(false);
+ 
   useEffect(()=>{
-      axios.get(`https://reqres.in/api/users`).then((response)=>{
+      getUser()
+  },[])
+  
+  const getUser = () =>{
+    axios.get(api).then((response)=>{
           setUsers(response?.data?.data)
       })
-  },[])
+  }
+
+  const createUser = (userData,event) =>{
+    if (event) {
+      event.preventDefault();
+    const url = api
+    const data = {...userData,id:users.length+1}
+    const headers = {
+        "Content-Type": "application/json"
+    }
+    if(userData?.first_name && userData?.email){
+    axios.post(url, data, headers).then((response)=>{
+      console.log(response?.data)
+      window.alert("User created successfully")
+      setIsUserAdded(true)
+      setUsers([...users,data]);
+  })
+  }else{
+    window.alert("Please enter data!!!")
+  }
+}
+}
   
   return (
   <div className="App">
-  <UserDataContext.Provider value={users}>
+  <UserDataContext.Provider value={{users,createUser,isUserAdded}}>
    <BrowserRouter>
    <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <ul className="navbar-nav mr-auto">

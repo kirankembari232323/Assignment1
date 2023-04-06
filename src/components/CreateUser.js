@@ -1,29 +1,72 @@
 
-import { useState } from "react";
-import axios from "axios";
+import { useState,useContext,useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { UserDataContext } from "../context/UserDataContext";
 
 function CreateUser() {
+  const navigate = useNavigate();
+  const  {createUser,isUserAdded} = useContext(UserDataContext);
   const [userData, setUserData] = useState({});
+  const [validation, setValidation] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    avatar: ""
+  });
+
+  const checkValidation = () => {
+    let errors = JSON.parse(JSON.stringify(validation));
+
+    //first Name validation
+    if (!userData.first_name) {
+      errors.first_name = "First name is required";
+    } else {
+      errors.first_name = "";
+    }
+    //last Name validation
+    if (!userData.last_name) {
+      errors.last_name = "Last name is required";
+    } else {
+      errors.last_name = "";
+    }
+
+    // email validation
+    const emailCond =
+    '[a-z0-9]+@[a-z]+\.[a-z]{2,3}';
+    if (!userData.email) {
+      errors.email = "Email is required";
+    } else if (!userData.email.match(emailCond)) {
+      errors.email = "Please ingress a valid email address";
+    } else {
+      errors.email = "";
+    }
+
+    //avatar validation
+    if (!userData.avatar) {
+      errors.avatar = "Avatar is required";
+    } else {
+      errors.avatar = "";
+    }
+    setValidation(errors);
+  };
+
+
 
   const handleSubmit = event => {
-    if (event) {
-      event.preventDefault();
-      const url = "https://reqres.in/api/users"
-      const data = userData
-      const headers = {
-          "Content-Type": "application/json"
-      }
-      if(userData?.name && userData?.job){
-      axios.post(url, data, headers).then((response)=>{
-        console.log(response?.data)
-        window.alert("User created successfully")
-    })
-  
-      console.log(userData)
-    }else{
-      window.alert("Please enter data!!!")
+     // checkValidation()
+    //if(!validation?.first_name && !validation?.last_name && !validation?.email && !validation?.avatar ){
+    createUser(userData,event)
+    //}
+    if(isUserAdded){
+      setTimeout(() => {
+        navigate('/',{
+          state: {
+            userData:userData
+          }
+        });
+      }, 1000);
     }
-  }
+  //}
   };
 
   const handleInputChange = event => {
@@ -41,29 +84,55 @@ function CreateUser() {
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Create User</h3>
           <div className="form-group mt-3">
-            <label>Name</label>
+            <label>First Name <span className="red">*</span></label>
             <input
               onChange={handleInputChange}
               type="text"
-              name="name"
-              value={userData.name}
+              name="first_name"
+              value={userData.first_name}
               placeholder="User Name"
               className="form-control mt-1"
             />
+            <p className="error">{validation?.first_name}</p>
           </div>
           <div className="form-group mt-3">
-            <label>Job</label>
+            <label>last Name <span className="red">*</span></label>
             <input
               onChange={handleInputChange}
               type="text"
-              name="job"
-              value={userData.job}
+              name="last_name"
+              value={userData.last_name}
+              placeholder="User Name"
+              className="form-control mt-1"
+            />
+            <p className="error">{validation?.last_name}</p>
+          </div>
+          <div className="form-group mt-3">
+            <label>Email <span className="red">*</span></label>
+            <input
+              onChange={handleInputChange}
+              type="email"
+              name="email"
+              value={userData.email}
+              placeholder="User Name"
+              className="form-control mt-1"
+            />
+            <p className="error">{validation?.email}</p>
+          </div>
+          <div className="form-group mt-3">
+            <label>Image Url <span className="red">*</span></label>
+            <input
+              onChange={handleInputChange}
+              type="text"
+              name="avatar"
+              value={userData.avatar}
               className="form-control mt-1"
               placeholder="Enter Job"
             />
+            <p className="error">{validation?.avatar}</p>
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button type="submit" onClick={handleSubmit} className="btn btn-primary">
+            <button onClick={handleSubmit} className="btn btn-primary">
               Submit
             </button>
           </div>

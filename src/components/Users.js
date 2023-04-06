@@ -3,18 +3,10 @@ import { Link } from 'react-router-dom';
 import {UserDataContext} from '../context/UserDataContext';
 
 function Users() {
-    const  users  = useContext(UserDataContext);
-    //console.log(">>>>>>>>>" +value)
-    // const[users, setUsers] = useState(value);
+    const  {users}  = useContext(UserDataContext);
     const[displayTableSTyle, setDisplayTableSTyle] = useState(true);
-    // useEffect(()=>{
-    //     axios.get(`https://reqres.in/api/users`).then((response)=>{
-    //         setUsers(response?.data?.data)
-    //     })
-    // },[])
 
   return (
-   
     <div>
     <h1> Users List</h1>
     <div className=" align-items-center grid-style">
@@ -50,11 +42,8 @@ function Users() {
                             <td>
                                 <div className=" align-items-center">
                                     <div className="btn-group" style={{ marginBottom: "20px" }}>
-                                    {/* <button className="btn btn-sm btn-outline-secondary" >Add User</button> */}
                                     <Link to={`/user/${user.id}`} className="btn btn-sm btn-outline-secondary">User Details </Link>
                                     <Link to={`/create`} className="btn btn-sm btn-outline-secondary">Add User </Link>
-                                        {/* <Link to={`edit/${user.id}`} className="btn btn-sm btn-outline-secondary">Edit Customer </Link>
-                                        <button className="btn btn-sm btn-outline-secondary" onClick={() => this.deleteCustomer(customer.id)}>Delete Customer</button> */}
                                     </div>
                                 </div>
                             </td>

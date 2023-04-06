@@ -46,13 +46,9 @@
   height: 100vh;
 }
 
-.Auth-form {
-  width: 420px;
-  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-  padding-top: 30px;
-  padding-bottom: 20px;
-  border-radius: 8px;
-  background-color: white;
+.first-cont {
+  font-weight: bold;
+    margin-top: 20px;
 }
 
 .Auth-form-content {
@@ -93,7 +89,7 @@
 
 .profile-container .avatar-div img {
   display: inline-block;
-  max-width: 100%;
+  max-width: 150px;
 }
 .name-span{
   margin: 5px 0px 0px 0px;
@@ -112,4 +108,39 @@
 .grid-style{
   text-align: right;
   margin-right: 62px;
+}
+
+
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (min-width: 992px) {
+  .Auth-form {
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    background-color: white;
+  }
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 900px) {
+  .Auth-form {
+    width: 344px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    background-color: white;
+    margin-top: -200px;
+    margin-right: 10px;
+  }
+}
+
+.error{   
+  text-align: left;
+  color: red;
+}
+.red{
+  color: red;
 }

@@ -6,11 +6,13 @@ import axios from "axios";
 function UsersDetails(props) {
   const { id } = useParams();
   const[user, setUser] = useState([])
+
   useEffect(()=>{
     axios.get(`https://reqres.in/api/users/${id}`).then((response)=>{
         setUser(response?.data?.data)
     })
-},[id])
+  },[id])
+
   return (
     <div style={{ backgroundColor: '#9de2ff', height: "100vh"  }}>
       <div className="justify-content-center">
@@ -19,7 +21,7 @@ function UsersDetails(props) {
                 <img style={{ width: '180px', borderRadius: '10px' }} src={user?.avatar} alt={user?.first_name}/>
                 </div>
                 <div className="flex-grow-1 ms-3">
-                  <div>{user?.first_name} </div>
+                  <div className="first-cont">{user?.first_name} </div>
                   <div>{user?.email} </div>
 
                   <div className="d-flex justify-content-start rounded-3 p-2 mb-2"
@@ -37,11 +39,10 @@ function UsersDetails(props) {
                       <p className="mb-0">{user?.last_name} </p>
                     </div>
                   </div>
-                  </div>
-                  </div>
+              </div>
+          </div>
       </div>
   </div>
-
   );
 }
 
