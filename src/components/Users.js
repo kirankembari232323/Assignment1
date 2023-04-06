@@ -15,7 +15,7 @@ function Users() {
         <button  onClick={()=>setDisplayTableSTyle(false)} className="btn btn-sm btn-outline-secondary">Grid</button>
         </div>
     </div>
-    {users.length === 0 && (
+    {users?.length === 0 && (
         <div className="text-center">
             <h2>No users found at the moment</h2>
         </div>
@@ -55,7 +55,7 @@ function Users() {
     </div>
     )}
     {!displayTableSTyle && (<div className="profile-container">
-        {users.length &&
+        {users?.length &&
           users.map((user) => {
             return (
               <Link to={`/user/${user.id}`} className="avatar-div" key={user.id}>

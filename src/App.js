@@ -23,6 +23,7 @@ function App() {
   }
 
   const createUser = (userData,event) =>{
+    var promise = new Promise(function(resolve, reject) {
     if (event) {
       event.preventDefault();
     const url = api
@@ -30,17 +31,23 @@ function App() {
     const headers = {
         "Content-Type": "application/json"
     }
-    if(userData?.first_name && userData?.email){
+
+    if(userData?.first_name && userData?.last_name && userData?.email && userData?.avatar){
     axios.post(url, data, headers).then((response)=>{
       console.log(response?.data)
       window.alert("User created successfully")
+      resolve("Promise resolved successfully");
       setIsUserAdded(true)
       setUsers([...users,data]);
   })
   }else{
     window.alert("Please enter data!!!")
+    reject(Error("Promise rejected"));
+    setIsUserAdded(true)
+    }
   }
-}
+})
+   return promise
 }
   
   return (

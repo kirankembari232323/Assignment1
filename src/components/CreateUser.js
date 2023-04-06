@@ -1,11 +1,11 @@
 
-import { useState,useContext,useEffect } from "react";
+import { useState,useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { UserDataContext } from "../context/UserDataContext";
 
 function CreateUser() {
   const navigate = useNavigate();
-  const  {createUser,isUserAdded} = useContext(UserDataContext);
+  const  {createUser} = useContext(UserDataContext);
   const [userData, setUserData] = useState({});
   const [validation, setValidation] = useState({
     first_name: "",
@@ -54,19 +54,11 @@ function CreateUser() {
 
   const handleSubmit = event => {
      // checkValidation()
-    //if(!validation?.first_name && !validation?.last_name && !validation?.email && !validation?.avatar ){
-    createUser(userData,event)
-    //}
-    if(isUserAdded){
-      setTimeout(() => {
-        navigate('/',{
-          state: {
-            userData:userData
-          }
-        });
-      }, 1000);
-    }
-  //}
+    createUser(userData,event).then(()=>{
+      //if(isUserAdded){
+        navigate('/')
+   // }
+    })
   };
 
   const handleInputChange = event => {
